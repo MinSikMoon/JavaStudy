@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="brython.js"></script>
+<script type="text/javascript" src="brython_stdlib.js"></script>
+<script type="text/javascript">
+	/* console.log 재정의 */
+	var logBackUp = console.log;
+	var logMessages = []
+	
+	console.log = function(s){
+		if(typeof(s) == 'string'){
+			if(s.includes('Trace')||!s.startsWith('Error'))
+				alert(s);
+		}
+		
+			
+		/* logMessages.push(s); */
+		logBackUp(s);
+	}
+	
+	
+
+</script>
+
+<script>
+	var afterpython = function(){
+		brython({debug:1, ipy_id:['testing']});
+		/* alert(logMessages[0]);  */
+		document.write("<p>"+logMessages[0]+"</p>");
+	} 
+	
+</script>
+
+</head>
+
+<body >
+
+	
+	
+	<script type="text/python" id="testing">
+import random as rd
+import time
+def make_rcp():
+    #rd.seed(time.time())
+    temp = rd.randrange(1,4)%3
+    return {
+        0 : "가위",
+        1 : "바위",
+        2 : "보"
+    }[temp]
+def is_win(p1, p2):
+    win_table = {
+        "가위" : "보",
+        "바위" : "가위",
+        "보" : "바위"
+    }
+    
+    if(p1 == p2):
+        return 0
+    if(p2 == win_table[p1]):
+        return 1
+    else:
+        return -1
+
+def main_logic():
+    result_map = {
+        0 : '비겼습니다.',
+        1 : '당신이 이겼습니다',
+        -1 : '컴퓨터가 이겼습니다'
+    }       
+    p1 = input('가위, 바위, 보 중 하나를 선택하시오: ')
+    p2 = make_rcp()
+    print('플레이어:', p1)
+    print('컴퓨터:', p2)
+    print(result_map[is_win(p1,p2)])
+
+main_logic()
+
+    
+	</script>
+	<script>
+		afterpython();
+	</script>
+	
+	<script type="text/javascript">
+		document.write("<p>이건 나오나</p>");
+	</script>
+
+	<button id="mybutton">click !</button>
+
+</body>
+
+</html>
