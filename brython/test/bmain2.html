@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="brython.js"></script>
+<script type="text/javascript" src="brython_stdlib.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+	/* console.log 재정의 */
+	/* global */
+	var logBackUp = console.log;
+	var g_result = '';
+	
+	console.log = function(s) {
+		
+		if (typeof (s) == 'string') {
+			if (!s.startsWith('Error'))
+				g_result += s;
+		}
+		
+		logBackUp(s);
+	}
+
+	$(function() {
+		
+		$("#run").click(function() {
+			var temp = $("#my_source").val();
+			$("#source").html(temp);
+			try{
+				brython({debug : 1,	ipy_id : [ 'source' ]});
+			}catch(err){
+				
+			}finally{
+				$("#output").html(g_result);
+				g_result='';
+			}
+			
+			
+		});
+	})
+</script>
+
+
+
+</head>
+
+<body>
+	<script type="text/python" id="source">	</script>
+	<textarea id="my_source" rows="10" cols="50"></textarea>
+	<br>
+	<button id="run">run</button>
+	<br>
+	<span style="white-space: pre-line" id="output"></span>
+</body>
+
+</html>
