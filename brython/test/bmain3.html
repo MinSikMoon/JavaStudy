@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="brython.js"></script>
+<script type="text/javascript" src="brython_stdlib.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//VARIABLES : 변수들
+		var OUTPUT_INIT = '======OUTPUT======\n'
+		var logBackUp = console.log;
+		var g_result = OUTPUT_INIT;
+		//console overriding : 콘솔 명령어 재정의/ 화면에 보이도록 후킹
+		console.log = function(s) {
+			if (typeof (s) == 'string') {
+				if (!s.startsWith('Error'))
+					g_result += s;
+			}
+			logBackUp(s);
+		}
+		//#run click function : run 버튼을 누르면 파이썬 스크립트 해석
+		$("#run").click(function() {
+			var temp = $("#my_source").val();
+			$("#source").html(temp);
+			try{
+				brython({debug : 1,	ipy_id : [ 'source' ]});
+			}catch(err){
+				
+			}finally{
+				$("#output").html(g_result);
+				g_result=OUTPUT_INIT;
+			}
+		});
+	})
+</script>
+
+
+
+</head>
+
+<body>
+	<script type="text/python" id="source">	</script>
+	<textarea id="my_source" rows="10" cols="50"></textarea>
+	<br>
+	<button id="run">run</button>
+	<br>
+	<span style="white-space: pre-line" id="output"></span>
+</body>
+
+</html>
