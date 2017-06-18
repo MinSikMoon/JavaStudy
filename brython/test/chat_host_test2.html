@@ -171,6 +171,10 @@ html, body, .container {
 	color: white;
 	background-color: #337ab7;
 }
+.chat-modal-header{
+	color: white;
+	background-color: #ff9800;
+}
 
 .blue-color {
 	background-color: #337ab7;
@@ -254,16 +258,32 @@ html, body, .container {
 
 			<!-- Modal content-->
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header chat-modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">채팅내용 from <span class="label label-success">문민식</span></h4>
+					<h4 class="modal-title">
+						채팅내용 from <span class="label label-success">문민식</span>
+					</h4>
 				</div>
 				<div class="modal-body">
-					<p>Some text in the modal.</p>
+					<div class="chat-group">
+						<div class="input-group">
+							<textarea readonly id="" class="form-control" rows="15"
+								placeholder="채팅 화면입니다."></textarea>
+						</div>
+
+
+						<div class="chat-input-group">
+							<textarea id="" class="form-control" rows="4"
+								placeholder="입력하세요."></textarea>
+						</div>
+						<div class="chat-button-group">
+							<button type="button" class="btn btn-success chat-btn" data-dismiss="modal">
+								<span class="glyphicon glyphicon-send"></span> 전송
+							</button>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
-
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 
