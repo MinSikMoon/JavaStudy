@@ -10,7 +10,39 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="brython.js"></script>
+<script type="text/javascript" src="brython_stdlib.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//VARIABLES : 변수들
+		var OUTPUT_INIT = ''
+		var logBackUp = console.log;
+		var g_result = OUTPUT_INIT;
+		//console overriding : 콘솔 명령어 재정의/ 화면에 보이도록 후킹
+		console.log = function(s) {
+			if (typeof (s) == 'string') {
+				if (!s.startsWith('Error'))
+					g_result += s;
+			}
+			logBackUp(s);
+		}
+		//#run click function : run 버튼을 누르면 파이썬 스크립트 해석
+		$("#run").click(function() {
+			var temp = $("#python-source").val();
+			$("#python-source").html(temp);
+			try {
+				brython({
+					debug : 1,
+					ipy_id : [ 'python-source' ]
+				});
+			} catch (err) {
+			} finally {
+				$("#python-output").html(g_result);
+				g_result = OUTPUT_INIT;
+			}
+		});
+	})
+</script>
 <!-- style -->
 <style>
 html, body, .container {
@@ -134,6 +166,15 @@ html, body, .container {
 .src-btn {
 	
 }
+
+.src-modal-header {
+	color: white;
+	background-color: #337ab7;
+}
+
+.blue-color {
+	background-color: #337ab7;
+}
 </style>
 
 <title>교수자 화면 목업</title>
@@ -181,9 +222,11 @@ html, body, .container {
 
 			<!-- Modal content-->
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header src-modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">파이썬 소스코드</h4>
+					<h4 class="modal-title">
+						파이썬 소스코드 from <span class="label label-success">문민식</span>
+					</h4>
 				</div>
 				<div class="modal-body">
 					<div class="input-group">
@@ -197,7 +240,7 @@ html, body, .container {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">RUN</button>
+					<button id="run" type="button" class="btn btn-primary python-btn">RUN</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -213,7 +256,7 @@ html, body, .container {
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">채팅내용</h4>
+					<h4 class="modal-title">채팅내용 from <span class="label label-success">문민식</span></h4>
 				</div>
 				<div class="modal-body">
 					<p>Some text in the modal.</p>
