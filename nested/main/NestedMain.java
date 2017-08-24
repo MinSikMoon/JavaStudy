@@ -17,7 +17,7 @@ public class NestedMain {
 		b.field1 = 777;
 		Outer.sttMemberCls.field2 = 7777;
 		
-		ot.methodForLocalCls(); //이 메소드를 호출하면 메소드에 정의된 로컬 클래스가 생성되고 사라지겠지. 
+		ot.methodForLocalCls(); //이 메소드를 호출하면 메소드에 정의된 로컬 클래스가 생성되고 사라지겠지
 		
 		
 	}
