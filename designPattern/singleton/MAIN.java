@@ -12,6 +12,9 @@ public class MAIN {
 		SingletonFalse1 s3 = new SingletonFalse1(); //이게 되면 안된다.
 		System.out.println(s1 == s3);
 		
+		//문제 해결
+		//SingletonBasic s4 = new SingletonBasic(); //기본 생성자가 private이기에 이렇게 할 수 없다. 임의의 객체 생성을 하지 못한다. 
+		
 	}
 
 }
